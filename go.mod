@@ -1,4 +1,4 @@
-module github.com/qimpl/APP_NAME
+module github.com/qimpl/notifications
 
 go 1.15
 
