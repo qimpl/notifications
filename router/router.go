@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/qimpl/APP_NAME/models"
-	"github.com/qimpl/APP_NAME/services"
+	"github.com/qimpl/notifications/models"
+	"github.com/qimpl/notifications/services"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -18,7 +18,7 @@ import (
 
 var unProtectedRoutes = []string{}
 
-// CreateRouter create APP_NAME API routes
+// CreateRouter create notifications API routes
 func CreateRouter() {
 	router := mux.NewRouter()
 	APIRouter := router.PathPrefix("/api/v1").Subrouter()

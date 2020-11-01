@@ -1,4 +1,4 @@
-# APP_NAME API
+# Notifications API
 
 ## API Documentation
 
