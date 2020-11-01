@@ -8,23 +8,71 @@
     },
     "basePath": "/api/v1",
     "paths": {
-        "/healthy": {
-            "get": {
-                "description": "Check if the current API is alive",
-                "summary": "Healthy Check",
-                "responses": {
-                    "200": {
-                        "description": "OK",
+        "/notification": {
+            "post": {
+                "description": "Add a new notification into the broker queues",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Add notification",
+                "parameters": [
+                    {
+                        "description": "Notification object",
+                        "name": "Notification",
+                        "in": "body",
+                        "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/models.Notification"
                         }
-                    },
-                    "404": {
-                        "description": "Not Found",
+                    }
+                ],
+                "responses": {
+                    "204": {},
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "type": "string"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Notification": {
+            "type": "object",
+            "properties": {
+                "device_id": {
+                    "type": "string",
+                    "example": "00000-00000-00000-00000"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@foo.com"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Hello my friend"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "My Notification"
+                },
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "[\"email\"",
+                        " \"apn\"]"
+                    ]
                 }
             }
         }

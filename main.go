@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/qimpl/notifications/broker"
 	_ "github.com/qimpl/notifications/docs"
 	"github.com/qimpl/notifications/router"
 
@@ -11,5 +12,8 @@ import (
 // @version 0.1.0
 // @BasePath /api/v1
 func main() {
-	router.CreateRouter()
+	go router.CreateRouter()
+	go broker.InitProducer()
+
+	broker.InitConsumer()
 }
