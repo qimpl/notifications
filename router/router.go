@@ -27,7 +27,7 @@ func CreateRouter() {
 
 	router.Use(jwtVerifyTokenMiddleware)
 
-	createHealthyRouter(APIRouter)
+	createNotificationRouter(APIRouter)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -36,7 +36,7 @@ func CreateRouter() {
 
 	c := cors.New(cors.Options{
 		AllowedMethods: []string{
-			http.MethodGet,
+			http.MethodPost,
 		},
 	})
 

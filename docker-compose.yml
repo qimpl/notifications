@@ -10,22 +10,10 @@ services:
     volumes:
       - ".:/api"
     entrypoint: ["./entrypoint.sh", "reflex", "-c", "reflex.conf"]
+    depends_on:
+      - broker
 
-  db:
-    container_name: "db-notifications"
-    image: postgres:13-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    volumes:
-      - "postgres:/var/lib/postgresql/data"
-
-  adminer:
-    container_name: "adminer-notifications"
-    image: adminer
-    restart: always
-
-volumes:
-  postgres:
+  broker:
+    container_name: "broker-notifications"
+    image: rabbitmq:3-management-alpine
+    hostname: "broker-notifications"
