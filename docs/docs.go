@@ -65,13 +65,13 @@ var doc = `{
         "models.Notification": {
             "type": "object",
             "properties": {
-                "device_id": {
-                    "type": "string",
-                    "example": "00000-00000-00000-00000"
-                },
                 "email": {
                     "type": "string",
                     "example": "john.doe@foo.com"
+                },
+                "expo_push_token": {
+                    "type": "string",
+                    "example": "ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]"
                 },
                 "message": {
                     "type": "string",
@@ -88,7 +88,7 @@ var doc = `{
                     },
                     "example": [
                         "[\"email\"",
-                        " \"apn\"]"
+                        " \"push\"]"
                     ]
                 }
             }

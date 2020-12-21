@@ -14,11 +14,6 @@ repos:
         stages: [commit]
       - id: go-mod-tidy
         stages: [commit]
-  - repo: https://github.com/Jerome1337/pre-commit-swaggo-swag
-    rev: master
-    hooks:
-      - id: swag
-        stages: [commit]
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
     rev: v3.0.0
     hooks:

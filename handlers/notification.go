@@ -44,24 +44,16 @@ func AddNotification(w http.ResponseWriter, r *http.Request) {
 			})
 
 			broker.PublishToEmailQueue(emailNotification)
-		case models.APN:
-			APNNotification, _ := json.Marshal(models.PushNotification{
-				Type:     models.APN,
-				Title:    notification.Title,
-				Message:  notification.Message,
-				DeviceID: notification.DeviceID,
+		case models.Push:
+			PushNotification, _ := json.Marshal(models.PushNotification{
+				Type:          models.Push,
+				Title:         notification.Title,
+				Message:       notification.Message,
+				ExpoPushToken: notification.ExpoPushToken,
 			})
 
-			broker.PublishToAPNPushQueue(APNNotification)
-		case models.FCM:
-			FCMNotification, _ := json.Marshal(models.PushNotification{
-				Type:     models.FCM,
-				Title:    notification.Title,
-				Message:  notification.Message,
-				DeviceID: notification.DeviceID,
-			})
+			broker.PublishToPushQueue(PushNotification)
 
-			broker.PublishToFCMPushQueue(FCMNotification)
 		default:
 			continue
 		}
