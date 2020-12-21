@@ -7,8 +7,7 @@ func InitProducer() {
 	Connect()
 
 	declareEmailQueue()
-	declareAPNPushQueue()
-	declareFCMPushQueue()
+	declarePushQueue()
 }
 
 func declareQueue(name string) (*amqp.Queue, error) {

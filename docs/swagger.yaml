@@ -2,11 +2,11 @@ basePath: /api/v1
 definitions:
   models.Notification:
     properties:
-      device_id:
-        example: 00000-00000-00000-00000
-        type: string
       email:
         example: john.doe@foo.com
+        type: string
+      expo_push_token:
+        example: ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
         type: string
       message:
         example: Hello my friend
@@ -17,7 +17,7 @@ definitions:
       type:
         example:
         - '["email"'
-        - ' "apn"]'
+        - ' "push"]'
         items:
           type: string
         type: array

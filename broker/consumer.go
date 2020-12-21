@@ -1,19 +1,23 @@
 package broker
 
-import "log"
+import (
+	"encoding/json"
+	"log"
+
+	"github.com/qimpl/notifications/models"
+	"github.com/qimpl/notifications/services"
+)
 
 // InitConsumer connects to RabbitMQ, declares and consumes queues
 func InitConsumer() {
 	Connect()
 
 	declareEmailQueue()
-	declareAPNPushQueue()
-	declareFCMPushQueue()
+	declarePushQueue()
 
 	forever := make(chan bool)
 	consumeEmailQueue()
-	consumeAPNPushQueue()
-	consumeFCMPushQueue()
+	consumePushQueue()
 
 	log.Println("Waiting messages")
 	<-forever
@@ -42,9 +46,9 @@ func consumeEmailQueue() {
 
 }
 
-func consumeAPNPushQueue() {
+func consumePushQueue() {
 	msgs, err := ch.Consume(
-		apnPushQueue.Name,
+		pushQueue.Name,
 		"APN Push Notifications",
 		false,
 		false,
@@ -53,34 +57,14 @@ func consumeAPNPushQueue() {
 		nil,
 	)
 	if err != nil {
-		log.Println("Failed to register APN Push notifications queue consumer:", err)
+		log.Println("Failed to register Push notifications queue consumer:", err)
 	}
 
 	go func() {
 		for d := range msgs {
-			log.Printf("Message APN: %s", d.Body)
-			d.Ack(false)
-		}
-	}()
-}
-
-func consumeFCMPushQueue() {
-	msgs, err := ch.Consume(
-		fcmPushQueue.Name,
-		"FCM Push Notifications",
-		false,
-		false,
-		false,
-		false,
-		nil,
-	)
-	if err != nil {
-		log.Println("Failed to register FCM Push notifications queue consumer:", err)
-	}
-
-	go func() {
-		for d := range msgs {
-			log.Printf("Message FCM: %s", d.Body)
+			notification := models.PushNotification{}
+			json.Unmarshal(d.Body, &notification)
+			services.PushNotification(&notification)
 			d.Ack(false)
 		}
 	}()
